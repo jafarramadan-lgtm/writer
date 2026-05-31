@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
   if (isProtectedRoute && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-  let data=null;
+  let data:any=null;
   if(token){
  try{
   const response = await fetch("https://back-writer.onrender.com/roleCheck", {
