@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
 import Alert from "@mui/material/Alert";
@@ -16,8 +16,16 @@ export default function SettingsComponent() {
   });
   const [passwordForDelete, setPasswordForDelete] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [p,setp]=useState<string>("")
   const [alertMessage, setAlertMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState<AlertColor>("success");
+  useEffect(()=>{
+const savedimg=localStorage.get("profileImage")
+    if(savedimg){
+      setp(savedimg)
+    }
+    
+  },[])
   return (
     <div className="w-full h-11/12   flex flex-col flex-1  gap-2  text-white font-sans ">
       {showAlert && (
@@ -40,7 +48,7 @@ export default function SettingsComponent() {
             <div className="       ">
               <Avatar
                 sx={{ width: 64, height: 64 }}
-                src={localStorage.getItem("profileImage") || ""}
+                src={p|| ""}
               />
             </div>
             <input
@@ -67,6 +75,7 @@ export default function SettingsComponent() {
                 const data = await res.json();
 
                 localStorage.setItem("profileImage", data.Imageurl);
+                setp( data.Imageurl)
               }}
             />
 
