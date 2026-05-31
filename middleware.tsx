@@ -1,5 +1,13 @@
 
 
+
+ import { NextResponse, NextRequest } from "next/server";
+ export async function middleware(request: NextRequest) {
+   return NextResponse.next();
+
+   
+ }
+
 // import { NextResponse, NextRequest } from "next/server";
 // export async function middleware(request: NextRequest) {
 //   const token = request.cookies.get("token")?.value;
