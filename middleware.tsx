@@ -3,9 +3,8 @@
 import { NextResponse, NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-  console.log(token)
-  console.log("jjjjjj")
-  const isProtectedRoute =
+  console.log(token,"jjjjjj")
+   const isProtectedRoute =
     request.nextUrl.pathname.startsWith("/writer") ||
     request.nextUrl.pathname.startsWith("/reader");
   const isAuthRoute =
