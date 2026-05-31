@@ -52,6 +52,7 @@ export default function HoverRating({
         precision={0.5}
         getLabelText={getLabelText}
         onChange={async (event, newValue: number) => {
+         if(newValue!==null){
           setRating(newValue);
           const res = await fetch(
             `https://back-writer.onrender.com/reader/rateStory/${params.idStory}`,
@@ -63,7 +64,7 @@ export default function HoverRating({
               body: JSON.stringify({ rating: newValue }),
             },
           );
-          const data = await res.json();
+          const data = await res.json();}
         }}
         onChangeActive={(event, newHover) => {
           setHover(newHover);
