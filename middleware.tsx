@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
         if (isAuthRoute && data) {
           if (data.role === "writer") return NextResponse.redirect(new URL("/writer", request.url));
           if (data.role === "reader") return NextResponse.redirect(new URL("/reader", request.url));
-          return NextResponse.redirect(new URL("/login", request.url));
+                   return NextResponse.next();
         }
 
         // فحص المسارات المحمية المتبادلة
