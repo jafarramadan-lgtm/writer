@@ -23,20 +23,15 @@ export async function middleware(request: NextRequest) {
     credentials: "include",
   });
 if (response.ok) {
-  data = await response.json(); 
- }}
- catch(e){
-    console.error("Error checking role:", e);}
-
-  }
-  if (isAuthRoute && token&&data) {
+  data = await response.json();
+  if (isAuthRoute &&data) {
     if (data.role === "writer")
       return NextResponse.redirect(new URL("/writer", request.url));
     if (data.role === "reader")
       return NextResponse.redirect(new URL("/reader", request.url));
     else return NextResponse.redirect(new URL("/login", request.url));
   }
-  if (token && isProtectedRoute&&data) {
+  if ( isProtectedRoute&&data) {
     if (
       data.role === "writer" &&
       request.nextUrl.pathname.startsWith("/reader")
@@ -51,6 +46,25 @@ if (response.ok) {
     }
     return NextResponse.next();
   }
+  else{
+ if(isProtectedRoute){
+const res=NextResponse.redirect(new URL("/login",request.url));
+   res.cookies.delete("token")
+   return res
+   
+ }
+    
+  }
+
+  
+ }
+ catch(e){
+    console.error("Error checking role:", e);}
+
+  }
+
+
+}    return NextResponse.next();
 }
 export const config = {
   matcher: ["/reader/:path*", "/writer/:path*", "/login", "/register"],
