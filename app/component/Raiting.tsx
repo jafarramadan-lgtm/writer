@@ -51,7 +51,7 @@ export default function HoverRating({
         value={rating}
         precision={0.5}
         getLabelText={getLabelText}
-        onChange={async (event, newValue: number) => {
+        onChange={async (event, newValue) => {
          if(newValue!==null){
           setRating(newValue);
           const res = await fetch(
