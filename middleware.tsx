@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
       const response = await fetch("https://back-writer.onrender.com/roleCheck", {
         method: "GET",
         headers: {
-          authorization: Bearer ${token},
+          authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         credentials: "include",
