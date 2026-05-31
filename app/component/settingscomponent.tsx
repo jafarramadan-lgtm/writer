@@ -3,6 +3,7 @@ import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
 import Alert from "@mui/material/Alert";
+import {AlertColor} from "@mui/material";
 export default function SettingsComponent() {
   const [dataEditePassword, setDataEditePassword] = useState({
     oldPassword: "",
@@ -16,7 +17,7 @@ export default function SettingsComponent() {
   const [passwordForDelete, setPasswordForDelete] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [alertSeverity, setAlertSeverity] = useState("success");
+  const [alertSeverity, setAlertSeverity] = useState<AlertColor>("success");
   return (
     <div className="w-full h-11/12   flex flex-col flex-1  gap-2  text-white font-sans ">
       {showAlert && (
