@@ -1,0 +1,57 @@
+import { NextResponse, NextRequest } from "next/server";
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get("token")?.value;
+
+  const isProtectedRoute =
+    request.nextUrl.pathname.startsWith("/writer") ||
+    request.nextUrl.pathname.startsWith("/reader");
+  const isAuthRoute =
+    request.nextUrl.pathname.startsWith("/login") ||
+    request.nextUrl.pathname.startsWith("/register");
+  if (isProtectedRoute && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  let data=null;
+  if(token){
+ try{
+  const response = await fetch("https://back-writer.onrender.com/roleCheck", {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+if (response.ok) {
+  data = await response.json(); 
+ }}
+ catch(e){
+    console.error("Error checking role:", e);}
+
+  }
+  if (isAuthRoute && token&&data) {
+    if (data.role === "writer")
+      return NextResponse.redirect(new URL("/writer", request.url));
+    if (data.role === "reader")
+      return NextResponse.redirect(new URL("/reader", request.url));
+    else return NextResponse.redirect(new URL("/login", request.url));
+  }
+  if (token && isProtectedRoute&&data) {
+    if (
+      data.role === "writer" &&
+      request.nextUrl.pathname.startsWith("/reader")
+    ) {
+      return NextResponse.redirect(new URL("/writer", request.url));
+    }
+    if (
+      data.role === "reader" &&
+      request.nextUrl.pathname.startsWith("/writer")
+    ) {
+      return NextResponse.redirect(new URL("/reader", request.url));
+    }
+    return NextResponse.next();
+  }
+}
+export const config = {
+  matcher: ["/reader/:path*", "/writer/:path*", "/login", "/register"],
+};

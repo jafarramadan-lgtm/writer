@@ -20,7 +20,34 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  width: 100vw;
 }
+button {
+  font-family: inherit;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #0d9347;
+  border: none;
+}
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(68, 240, 16, 0.2);
+  z-index: -1;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+}
+button:hover::before {
+  transform: translateY(0);
+
+  
+ }
